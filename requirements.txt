@@ -1,4 +1,3 @@
-pyTelegramBotAPI
 aiogram
 aiofiles
 aiosqlite
