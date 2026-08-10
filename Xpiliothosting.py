@@ -71,7 +71,7 @@ def init_db():
             user_id INTEGER,
             filename TEXT,
             filepath TEXT,
-            entry_file TEXT,       # for zip: path to main .py
+            entry_file TEXT,       -- for zip: path to main .py
             logpath TEXT,
             pid INTEGER DEFAULT NULL,
             status TEXT DEFAULT 'stopped',
