@@ -1,1 +1,7 @@
 pyTelegramBotAPI
+aiogram
+aiofiles
+aiosqlite
+curl-cffi
+pyrogram
+tgcrypto
