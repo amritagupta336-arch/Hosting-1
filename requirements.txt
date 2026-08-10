@@ -1,6 +1,1 @@
-aiogram
-aiofiles
-aiosqlite
-curl-cffi
-pyrogram
-tgcrypto
+pip install pyTelegramBotAPI
