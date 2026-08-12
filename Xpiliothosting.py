@@ -1057,20 +1057,20 @@ if __name__ == '__main__':
     print(f"✅ Price: ₹{config['price_amount']}") 
     print("✅ Auto-Install Feature: ENABLED")
 
-    # --- THE FIX STARTS HERE ---
+    # --- THE NEW FIX FOR TELEBOT LIBRARY ---
+    print("🔄 Killing old bot connection...")
     try:
-        print("🔄 Forcefully disconnecting old bot instance...")
-        # Use the 'bot' object to remove any active webhook/poller
-        bot.delete_webhook(drop_pending_updates=True)
-        print("✅ Old instance disconnected successfully.")
+        # telebot uses remove_webhook, not delete_webhook
+        bot.remove_webhook() 
+        print("✅ Old webhook removed successfully.")
     except Exception as e:
-        # This block will catch errors if there was no old instance to disconnect
-        print(f"⚠️ Disconnect status: {e}")
-    # --- THE FIX ENDS HERE ---
+        print(f"⚠️ Remove webhook status: {e}")
+    # --- FIX ENDS HERE ---
 
-    # Now safely start the polling
+    # Start polling
     bot.infinity_polling(
         skip_pending=True,
         timeout=10,
         long_polling_timeout=5
     )
+    
