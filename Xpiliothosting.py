@@ -544,37 +544,32 @@ def callback_handler(call):
             f"⚠️ *QR will auto-refresh in 2 minutes.*"
         )
         
-        qr_img_path = "upi_qr.jpg"
-        
-        if os.path.exists(qr_img_path):
-            try:
-                with open(qr_img_path, 'rb') as photo:
-                    bot.send_photo(chat_id, photo, caption=pay_msg, parse_mode="Markdown")
-            except Exception as e:
-                bot.send_message(chat_id, f"❌ Failed to send QR. Error: {str(e)}\n\n{pay_msg}", parse_mode="Markdown")
-        else:
-            try:
-                upi_string = f"upi://pay?pa={config['upi_id']}&pn=ANIKETHosting&am={config['price_amount']}&cu=INR"
-                qr = qrcode.QRCode(box_size=10, border=4)
-                qr.add_data(upi_string)
-                qr.make(fit=True)
-                img = qr.make_image(fill_color="black", back_color="white")
-                
-                qr_img_path = f"qr_{user_id}_{int(time.time())}.png"
-                img.save(qr_img_path)
-                
-                with open(qr_img_path, 'rb') as photo:
-                    bot.send_photo(chat_id, photo, caption=pay_msg, parse_mode="Markdown")
-                
-                def delete_qr_after():
-                    time.sleep(120)
-                    if os.path.exists(qr_img_path):
-                        os.remove(qr_img_path)
-                threading.Thread(target=delete_qr_after, daemon=True).start()
-                
-            except Exception as e:
-                bot.send_message(chat_id, f"❌ QR generation failed. Error: {str(e)}")
-                bot.send_message(chat_id, pay_msg, parse_mode="Markdown")
+        try:
+            # Generate dynamic QR Code based on current UPI ID and Price
+            upi_string = f"upi://pay?pa={config['upi_id']}&pn=ANIKET Hosting&am={config['price_amount']}&cu=INR"
+            qr = qrcode.QRCode(box_size=10, border=4)
+            qr.add_data(upi_string)
+            qr.make(fit=True)
+            img = qr.make_image(fill_color="black", back_color="white")
+            
+            # Save with a unique name per user so it doesn't conflict
+            qr_img_path = f"qr_{user_id}_{int(time.time())}.png"
+            img.save(qr_img_path)
+            
+            # Send the dynamically generated QR photo
+            with open(qr_img_path, 'rb') as photo:
+                bot.send_photo(chat_id, photo, caption=pay_msg, parse_mode="Markdown")
+            
+            # Delete the QR image after 2 minutes to save server space
+            def delete_qr_after():
+                time.sleep(120)
+                if os.path.exists(qr_img_path):
+                    os.remove(qr_img_path)
+            threading.Thread(target=delete_qr_after, daemon=True).start()
+            
+        except Exception as e:
+            # If QR fails for any reason, just send the text
+            bot.send_message(chat_id, f"⚠️ QR generation failed ({str(e)}). Please pay manually.\n\n{pay_msg}", parse_mode="Markdown")
 
         markup = types.InlineKeyboardMarkup()
         markup.add(types.InlineKeyboardButton("💬 Send TrxID to Admin", url=f"https://t.me/{ADMIN_USERNAME}"))
@@ -1059,13 +1054,13 @@ if __name__ == '__main__':
 
     # --- THE NEW FIX FOR TELEBOT LIBRARY ---
     # --- CONFLICT FIX ---
-print("🔄 Killing old webhook...")
-try:
-    bot.remove_webhook()
-    print("✅ Old webhook removed.")
-except Exception as e:
-    print(f"⚠️ Remove webhook status: {e}")
-# ---------------------
+    print("🔄 Killing old webhook...")
+    try:
+        bot.remove_webhook()
+        print("✅ Old webhook removed.")
+    except Exception as e:
+        print(f"⚠️ Remove webhook status: {e}")
+    # ---------------------
     # --- FIX ENDS HERE ---
 
     # Start polling
@@ -1074,4 +1069,3 @@ except Exception as e:
         timeout=10,
         long_polling_timeout=5
     )
-    
