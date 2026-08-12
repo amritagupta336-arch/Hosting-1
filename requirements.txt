@@ -2,3 +2,4 @@ pyTelegramBotAPI
 qrcode[pil]
 pillow
 pip install python-telegram-bot
+python-telegram-bot
