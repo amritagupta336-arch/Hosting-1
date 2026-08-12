@@ -1056,7 +1056,8 @@ if __name__ == '__main__':
     print(f"✅ UPI ID: {config['upi_id']}")
     print(f"✅ Price: ₹{config['price_amount']} / {config['price_days']} Days")
     print("✅ Auto-Install Feature: ENABLED")
-    
+        # Drop old webhook to prevent 409 Conflict error on Railway restart
+    bot.delete_webhook(drop_pending_updates=True)
     bot.infinity_polling(
         skip_pending=True,
         timeout=10,
