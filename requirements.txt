@@ -1,2 +1,1 @@
-python-telegram-bot
-pyTelegramBotAPI
+pip install pyTelegramBotAPI python-telegram-bot qrcode
