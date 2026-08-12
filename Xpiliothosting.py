@@ -1058,13 +1058,14 @@ if __name__ == '__main__':
     print("✅ Auto-Install Feature: ENABLED")
 
     # --- THE NEW FIX FOR TELEBOT LIBRARY ---
-    print("🔄 Killing old bot connection...")
-    try:
-        # telebot uses remove_webhook, not delete_webhook
-        bot.remove_webhook() 
-        print("✅ Old webhook removed successfully.")
-    except Exception as e:
-        print(f"⚠️ Remove webhook status: {e}")
+    # --- CONFLICT FIX ---
+print("🔄 Killing old webhook...")
+try:
+    bot.remove_webhook()
+    print("✅ Old webhook removed.")
+except Exception as e:
+    print(f"⚠️ Remove webhook status: {e}")
+# ---------------------
     # --- FIX ENDS HERE ---
 
     # Start polling
