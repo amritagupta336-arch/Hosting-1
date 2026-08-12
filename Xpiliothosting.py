@@ -1049,15 +1049,26 @@ def gen_key_cmd(message):
 
 # ==================== HIGH PERFORMANCE POLLING ====================
 if __name__ == '__main__':
-    print("🎬 Made by ANIKET")
-    print("⚡ Ultra-Fast Prime Hosting Server v4.5 Running...")
+    print("🤖 Made by ANIKET")
+    print("⚡ Ultra-Fast Prime Hosting Server v4.5")
     print(f"✅ Bot Username: @{BOT_USERNAME}")
     print(f"✅ Admin ID: {ADMIN_ID}")
     print(f"✅ UPI ID: {config['upi_id']}")
-    print(f"✅ Price: ₹{config['price_amount']} / {config['price_days']} Days")
+    print(f"✅ Price: ₹{config['price_amount']}") 
     print("✅ Auto-Install Feature: ENABLED")
-        # Drop old webhook to prevent 409 Conflict error on Railway restart
-    bot.delete_webhook(drop_pending_updates=True)
+
+    # --- THE FIX STARTS HERE ---
+    try:
+        print("🔄 Forcefully disconnecting old bot instance...")
+        # Use the 'bot' object to remove any active webhook/poller
+        bot.delete_webhook(drop_pending_updates=True)
+        print("✅ Old instance disconnected successfully.")
+    except Exception as e:
+        # This block will catch errors if there was no old instance to disconnect
+        print(f"⚠️ Disconnect status: {e}")
+    # --- THE FIX ENDS HERE ---
+
+    # Now safely start the polling
     bot.infinity_polling(
         skip_pending=True,
         timeout=10,
