@@ -17,8 +17,8 @@ import qrcode
 from PIL import Image
 
 # ==================== RAILWAY CONFIGURATION ====================
-BOT_TOKEN = os.environ.get("BOT_TOKEN", "8953813919:AAFKebGgZqCCZwjYwEYCMFiPwmBmtBfO5Uc")
-BOT_USERNAME = os.environ.get("BOT_USERNAME", "hostingbyaniket_bot")
+BOT_TOKEN = os.environ.get("BOT_TOKEN", "8777448517:AAEKrkpfM4Mx-lG95HLHI6jFMdDShDOidag")
+BOT_USERNAME = os.environ.get("BOT_USERNAME", "@Hosting4_bot")
 ADMIN_ID = int(os.environ.get("ADMIN_ID", 8705755564))
 ADMIN_USERNAME = os.environ.get("ADMIN_USERNAME", "aniket9308")
 CHANNEL_USERNAME = os.environ.get("CHANNEL_USERNAME", "aniket8757tg")
