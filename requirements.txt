@@ -1,4 +1,5 @@
 pyTelegramBotAPI
-python-telegram-bot
 qrcode
-pillow
+Pillow
+requests
+cryptography
